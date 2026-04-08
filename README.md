@@ -48,7 +48,7 @@ docs/portfolio_case.md
 
 ## Demo 演示
 
-👉 demo/demo_video.mp4
+demo/demo_video.mp4
 
 ---
 
@@ -62,3 +62,8 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+访问http://127.0.0.1:8000/docs
+
+### 前端
+
+Xcode打开ios/FocusPet.xcodeproj
