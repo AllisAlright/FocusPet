@@ -1,0 +1,37 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Home/SceneObjectButton.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/SceneObjectButton.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/SceneObjectButton.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/SceneObjectButton.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/SceneObjectButton.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/SceneObjectButton.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Memo/MemoEditorView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoEditorView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoEditorView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoEditorView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoEditorView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoEditorView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Memo/MemoPlaceholderView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoPlaceholderView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoPlaceholderView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoPlaceholderView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoPlaceholderView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoPlaceholderView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Memo/MemoRecentlyDeletedView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoRecentlyDeletedView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoRecentlyDeletedView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoRecentlyDeletedView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoRecentlyDeletedView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoRecentlyDeletedView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Memo/MemoToTaskConversionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoToTaskConversionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoToTaskConversionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoToTaskConversionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoToTaskConversionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/MemoToTaskConversionView.swiftdeps"
+  }
+}

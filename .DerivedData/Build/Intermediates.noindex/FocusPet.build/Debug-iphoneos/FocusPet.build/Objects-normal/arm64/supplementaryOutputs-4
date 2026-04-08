@@ -1,0 +1,37 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusCompletionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusCompletionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusCompletionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusCompletionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusCompletionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusCompletionView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusSessionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSessionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSessionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSessionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSessionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSessionView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusSetupView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSetupView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSetupView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSetupView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSetupView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusSetupView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusTimerController.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusTimerController.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusTimerController.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusTimerController.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusTimerController.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/FocusTimerController.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/History/HistoryPlaceholderView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/HistoryPlaceholderView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/HistoryPlaceholderView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/HistoryPlaceholderView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/HistoryPlaceholderView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphoneos/FocusPet.build/Objects-normal/arm64/HistoryPlaceholderView.swiftdeps"
+  }
+}

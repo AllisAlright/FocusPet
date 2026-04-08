@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FocusPetApp: App {
+    @StateObject private var store = FocusPetStore()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(store)
         }
     }
 }

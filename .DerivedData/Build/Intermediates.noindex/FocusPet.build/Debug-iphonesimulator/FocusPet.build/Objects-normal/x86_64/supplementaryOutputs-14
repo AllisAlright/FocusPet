@@ -1,0 +1,37 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Memo/MemoToTaskConversionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MemoToTaskConversionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MemoToTaskConversionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MemoToTaskConversionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MemoToTaskConversionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MemoToTaskConversionView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Settings/SettingsPlaceholderView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SettingsPlaceholderView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SettingsPlaceholderView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SettingsPlaceholderView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SettingsPlaceholderView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SettingsPlaceholderView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Tasks/TaskEditorView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskEditorView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskEditorView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskEditorView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskEditorView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskEditorView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Tasks/TaskRecentlyDeletedView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskRecentlyDeletedView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskRecentlyDeletedView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskRecentlyDeletedView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskRecentlyDeletedView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskRecentlyDeletedView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Tasks/TasksPlaceholderView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TasksPlaceholderView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TasksPlaceholderView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TasksPlaceholderView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TasksPlaceholderView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TasksPlaceholderView.swiftdeps"
+  }
+}

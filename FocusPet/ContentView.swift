@@ -1,24 +1,12 @@
-//
-//  ContentView.swift
-//  FocusPet
-//
-//  Created by xsy on 2026/3/14.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        HomeSceneView()
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(FocusPetStore())
 }

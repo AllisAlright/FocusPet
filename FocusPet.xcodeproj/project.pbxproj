@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		358E7DDE2F655FAE00878B25 /* Agents.md in Resources */ = {isa = PBXBuildFile; fileRef = 358E7DDD2F655F9400878B25 /* Agents.md */; };
+		358E7E762F72BC5800878B25 /* AGENTS_v2.md in Resources */ = {isa = PBXBuildFile; fileRef = 358E7E752F72BC5100878B25 /* AGENTS_v2.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		358E7DCF2F655EDF00878B25 /* FocusPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		358E7DDD2F655F9400878B25 /* Agents.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Agents.md; sourceTree = "<group>"; };
+		358E7E752F72BC5100878B25 /* AGENTS_v2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS_v2.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +39,8 @@
 		358E7DC62F655EDF00878B25 = {
 			isa = PBXGroup;
 			children = (
+				358E7E752F72BC5100878B25 /* AGENTS_v2.md */,
+				358E7DDD2F655F9400878B25 /* Agents.md */,
 				358E7DD12F655EDF00878B25 /* FocusPet */,
 				358E7DD02F655EDF00878B25 /* Products */,
 			);
@@ -109,6 +118,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				358E7DDE2F655FAE00878B25 /* Agents.md in Resources */,
+				358E7E762F72BC5800878B25 /* AGENTS_v2.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +264,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +296,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

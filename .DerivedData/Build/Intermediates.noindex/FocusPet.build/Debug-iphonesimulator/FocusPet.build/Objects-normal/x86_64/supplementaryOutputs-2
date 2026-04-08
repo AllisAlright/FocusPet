@@ -1,0 +1,44 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Enums/FocusSessionStatus.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusSessionStatus.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusSessionStatus.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusSessionStatus.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusSessionStatus.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusSessionStatus.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Enums/PetType.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/PetType.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/PetType.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/PetType.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/PetType.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/PetType.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Enums/SceneType.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SceneType.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SceneType.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SceneType.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SceneType.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/SceneType.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Enums/TaskStatus.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskStatus.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskStatus.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskStatus.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskStatus.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskStatus.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Enums/TimerMode.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TimerMode.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TimerMode.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TimerMode.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TimerMode.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TimerMode.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Models/AgentEvent.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/AgentEvent.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/AgentEvent.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/AgentEvent.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/AgentEvent.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/AgentEvent.swiftdeps"
+  }
+}

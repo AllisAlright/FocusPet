@@ -1,0 +1,44 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusTimerController.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusTimerController.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusTimerController.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusTimerController.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusTimerController.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/FocusTimerController.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/History/HistoryPlaceholderView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/HistoryPlaceholderView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/HistoryPlaceholderView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/HistoryPlaceholderView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/HistoryPlaceholderView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/HistoryPlaceholderView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/History/TaskArchiveDetailView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskArchiveDetailView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskArchiveDetailView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskArchiveDetailView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskArchiveDetailView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/TaskArchiveDetailView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Home/AI/APISplitTaskProvider.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISplitTaskProvider.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISplitTaskProvider.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISplitTaskProvider.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISplitTaskProvider.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISplitTaskProvider.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Home/AI/APISuggestNextActionProvider.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISuggestNextActionProvider.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISuggestNextActionProvider.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISuggestNextActionProvider.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISuggestNextActionProvider.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/APISuggestNextActionProvider.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Home/AI/MockSplitTaskProvider.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MockSplitTaskProvider.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MockSplitTaskProvider.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MockSplitTaskProvider.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MockSplitTaskProvider.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/x86_64/MockSplitTaskProvider.swiftdeps"
+  }
+}

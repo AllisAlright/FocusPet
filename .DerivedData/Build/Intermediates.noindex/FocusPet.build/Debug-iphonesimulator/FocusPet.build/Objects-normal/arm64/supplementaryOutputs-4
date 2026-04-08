@@ -1,0 +1,44 @@
+{
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Models/TaskItem.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskItem.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskItem.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskItem.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskItem.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskItem.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Services/FocusManager.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusManager.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusManager.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusManager.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusManager.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusManager.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Domain/Services/TaskManager.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskManager.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskManager.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskManager.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskManager.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/TaskManager.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusCompletionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusCompletionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusCompletionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusCompletionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusCompletionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusCompletionView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusSessionView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSessionView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSessionView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSessionView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSessionView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSessionView.swiftdeps"
+  },
+  "/Users/xsy/Xcode/FocusPet/FocusPet/Features/Focus/FocusSetupView.swift" : {
+    "const-values" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSetupView.swiftconstvalues",
+    "dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSetupView.d",
+    "diagnostics" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSetupView.dia",
+    "object" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSetupView.o",
+    "swift-dependencies" : "/Users/xsy/Xcode/FocusPet/.DerivedData/Build/Intermediates.noindex/FocusPet.build/Debug-iphonesimulator/FocusPet.build/Objects-normal/arm64/FocusSetupView.swiftdeps"
+  }
+}
