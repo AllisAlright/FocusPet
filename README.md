@@ -44,11 +44,6 @@ docs/portfolio_case.md
 - AI：DeepSeek API
 - AI工程：Prompt Engineering + Skill架构
 
----
-
-## Demo 演示
-
-demo/demo_video.mp4
 
 ---
 
