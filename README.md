@@ -110,6 +110,7 @@ FocusPet 的首页已经从“功能入口页”调整为“宠物陪伴与 Agen
 ├── Docs/
 ├── Agents.md
 ├── README.md
+├── portfolio_case.md
 └── .gitignore
 ```
 
@@ -117,6 +118,7 @@ FocusPet 的首页已经从“功能入口页”调整为“宠物陪伴与 Agen
 
 - `README.md`：当前文件，说明项目整体状态、目录结构、运行方式和产品口径。
 - `Agents.md`：当前产品和 Pet Agent 的统一口径，用它替代过时的 Agent v2 草稿。
+- `portfolio_case.md`：作品集/案例展示稿，适合对外介绍项目亮点；具体实现口径仍以 `README.md` 和 `Agents.md` 为准。
 - `.gitignore`：忽略本地密钥、虚拟环境、本地数据库、Python 缓存和 Xcode 构建产物。
 
 ### iOS App
