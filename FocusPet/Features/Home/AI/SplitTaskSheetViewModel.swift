@@ -15,10 +15,23 @@ final class SplitTaskSheetViewModel: ObservableObject {
     @Published private(set) var suggestions: [SplitTaskSuggestion] = []
     @Published private(set) var understandingMessage: String?
 
+    private let preferredPet: PetType
     private let provider: any SplitTaskProviding
 
-    init(provider: any SplitTaskProviding = APISplitTaskProvider()) {
+    init(
+        initialInput: String = "",
+        initialSuggestions: [String] = [],
+        preferredPet: PetType,
+        provider: any SplitTaskProviding = APISplitTaskProvider()
+    ) {
+        self.input = initialInput
+        self.preferredPet = preferredPet
         self.provider = provider
+        if !initialSuggestions.isEmpty {
+            self.suggestions = initialSuggestions.map { SplitTaskSuggestion(title: $0) }
+            self.understandingMessage = buildUnderstandingMessage(for: initialInput)
+            self.phase = .loaded
+        }
     }
 
     var canSubmit: Bool {
@@ -37,7 +50,7 @@ final class SplitTaskSheetViewModel: ObservableObject {
         phase = .loading
 
         do {
-            let generatedTitles = try await provider.generateSubtasks(from: request)
+            let generatedTitles = try await provider.generateSubtasks(from: request, petType: preferredPet)
             suggestions = generatedTitles.map { SplitTaskSuggestion(title: $0) }
             understandingMessage = buildUnderstandingMessage(for: request)
             phase = .loaded

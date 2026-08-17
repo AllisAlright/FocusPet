@@ -24,13 +24,6 @@ struct MemoPlaceholderView: View {
 
     var body: some View {
         FocusPetSceneScaffold(title: nil, subtitle: nil) {
-            FocusPetCompanionHeader(
-                petType: store.settings.defaultPet,
-                eyebrow: "雨天小角落",
-                title: "把念头轻轻放下",
-                message: "先记下来，未来可以整理成任务"
-            )
-
             SoftPanel {
                 NavigationLink {
                     MemoRecentlyDeletedView()

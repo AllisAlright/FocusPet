@@ -10,17 +10,20 @@ struct FocusSessionView: View {
 
     let taskID: UUID?
     let petType: PetType
+    let sceneType: SceneType
     let timerMode: TimerMode
     let plannedDurationSeconds: Int?
 
     init(
         taskID: UUID?,
         petType: PetType,
+        sceneType: SceneType,
         timerMode: TimerMode,
         plannedDurationSeconds: Int?
     ) {
         self.taskID = taskID
         self.petType = petType
+        self.sceneType = sceneType
         self.timerMode = timerMode
         self.plannedDurationSeconds = plannedDurationSeconds
         _timerController = StateObject(
@@ -195,11 +198,10 @@ struct FocusSessionView: View {
         didFinishSession = true
         timerController.stop()
 
-        // SceneType remains in the model for compatibility with existing local data.
         completedSession = FocusSession(
             taskID: taskID,
             petType: petType,
-            sceneType: .rainyWindow,
+            sceneType: sceneType,
             startedAt: startDate,
             endedAt: .now,
             durationSeconds: timerController.elapsedSeconds,

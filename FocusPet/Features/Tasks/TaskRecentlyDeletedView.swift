@@ -6,13 +6,6 @@ struct TaskRecentlyDeletedView: View {
 
     var body: some View {
         FocusPetSceneScaffold(title: nil, subtitle: nil) {
-            FocusPetCompanionHeader(
-                petType: store.settings.defaultPet,
-                eyebrow: "安静回收站",
-                title: "最近删除",
-                message: "这里的内容会在 7 天后自动删除"
-            )
-
             if store.deletedTasks.isEmpty {
                 SoftPanel {
                     Text("这里是空的")

@@ -4,38 +4,25 @@ struct FocusSetupView: View {
     @EnvironmentObject private var store: FocusPetStore
 
     let preselectedTaskID: UUID?
+    let initialCountdownMinutes: Int?
 
     @State private var selectedTaskID: UUID?
     @State private var searchText = ""
+    @State private var selectedScene: SceneType
     @State private var timerMode: TimerMode
     @State private var countdownMinutes: Int
 
-    init(preselectedTaskID: UUID? = nil) {
+    init(preselectedTaskID: UUID? = nil, initialCountdownMinutes: Int? = nil) {
         self.preselectedTaskID = preselectedTaskID
+        self.initialCountdownMinutes = initialCountdownMinutes
         _selectedTaskID = State(initialValue: preselectedTaskID)
+        _selectedScene = State(initialValue: .rainyWindow)
         _timerMode = State(initialValue: .countDown)
-        _countdownMinutes = State(initialValue: 25)
+        _countdownMinutes = State(initialValue: initialCountdownMinutes ?? 25)
     }
 
     var body: some View {
         FocusPetSceneScaffold(title: nil, subtitle: nil) {
-            SoftPanel {
-                HStack(alignment: .center, spacing: 12) {
-                    PetAvatarBadge(petType: store.settings.defaultPet, size: .small)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("开始专注")
-                            .font(FocusPetTheme.Typography.title)
-                            .foregroundStyle(FocusPetTheme.Palette.ink)
-
-                        Text(guidanceText)
-                            .font(FocusPetTheme.Typography.subheadline)
-                            .foregroundStyle(FocusPetTheme.Palette.inkSoft)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-            }
-
             if isTaskLocked {
                 SoftPanel {
                     Text("这次将围绕这个事项专注")
@@ -62,13 +49,9 @@ struct FocusSetupView: View {
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundStyle(selectedTaskID == nil ? FocusPetTheme.Palette.sage : FocusPetTheme.Palette.inkSoft)
 
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("自由专注")
-                                    .font(FocusPetTheme.Typography.headline)
-                                    .foregroundStyle(FocusPetTheme.Palette.ink)
-
-                               
-                            }
+                            Text("自由专注")
+                                .font(FocusPetTheme.Typography.headline)
+                                .foregroundStyle(FocusPetTheme.Palette.ink)
 
                             Spacer(minLength: 0)
                         }
@@ -115,6 +98,18 @@ struct FocusSetupView: View {
             }
 
             SoftPanel {
+                Text("专注场景")
+                    .font(FocusPetTheme.Typography.headline)
+
+                Picker("专注场景", selection: $selectedScene) {
+                    ForEach(SceneType.allCases) { scene in
+                        Text(scene.displayName).tag(scene)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
+            SoftPanel {
                 Text("计时方式")
                     .font(FocusPetTheme.Typography.headline)
 
@@ -131,14 +126,6 @@ struct FocusSetupView: View {
                             .font(FocusPetTheme.Typography.body)
                             .foregroundStyle(FocusPetTheme.Palette.ink)
                     }
-
-                    Text("可以从一个轻松的时长开始")
-                        .font(FocusPetTheme.Typography.subheadline)
-                        .foregroundStyle(FocusPetTheme.Palette.inkSoft)
-                } else {
-                    Text("正计时会从 00:00 开始累计，适合开放式投入")
-                        .font(FocusPetTheme.Typography.subheadline)
-                        .foregroundStyle(FocusPetTheme.Palette.inkSoft)
                 }
             }
 
@@ -147,6 +134,7 @@ struct FocusSetupView: View {
                     FocusSessionView(
                         taskID: selectedTaskID,
                         petType: store.settings.defaultPet,
+                        sceneType: selectedScene,
                         timerMode: timerMode,
                         plannedDurationSeconds: timerMode == .countDown ? countdownMinutes * 60 : nil
                     )
@@ -167,8 +155,9 @@ struct FocusSetupView: View {
         .navigationTitle("开始专注")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            timerMode = store.settings.defaultTimerMode
-            countdownMinutes = store.settings.defaultCountdownMinutes
+            selectedScene = store.settings.defaultScene
+            timerMode = initialCountdownMinutes == nil ? store.settings.defaultTimerMode : .countDown
+            countdownMinutes = initialCountdownMinutes ?? store.settings.defaultCountdownMinutes
             if let selectedTaskID, !focusableTasks.contains(where: { $0.id == selectedTaskID }) {
                 self.selectedTaskID = nil
             }
@@ -182,10 +171,6 @@ struct FocusSetupView: View {
     private var lockedTask: Task? {
         guard let preselectedTaskID else { return nil }
         return focusableTasks.first { $0.id == preselectedTaskID }
-    }
-
-    private var guidanceText: String {
-        "留一小段时间给自己"
     }
 
     private var searchKeyword: String {
@@ -234,14 +219,6 @@ struct FocusSetupView: View {
                             .font(FocusPetTheme.Typography.headline)
                             .foregroundStyle(FocusPetTheme.Palette.ink)
                             .multilineTextAlignment(.leading)
-
-                        if let notesPreview = task.notesPreview {
-                            Text(notesPreview)
-                                .font(FocusPetTheme.Typography.subheadline)
-                                .foregroundStyle(FocusPetTheme.Palette.inkSoft)
-                                .lineLimit(2)
-                                .multilineTextAlignment(.leading)
-                        }
                     }
 
                     Spacer(minLength: 0)
@@ -263,14 +240,6 @@ struct FocusSetupView: View {
                         .font(FocusPetTheme.Typography.headline)
                         .foregroundStyle(FocusPetTheme.Palette.ink)
                         .multilineTextAlignment(.leading)
-
-                    if let notesPreview = task.notesPreview {
-                        Text(notesPreview)
-                            .font(FocusPetTheme.Typography.subheadline)
-                            .foregroundStyle(FocusPetTheme.Palette.inkSoft)
-                            .lineLimit(2)
-                            .multilineTextAlignment(.leading)
-                    }
                 }
 
                 Spacer(minLength: 0)

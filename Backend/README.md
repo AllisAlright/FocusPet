@@ -1,812 +1,258 @@
-# FocusPet Backend MVP Scaffold
+# FocusPet 后端说明
 
-This folder contains a beginner-friendly local backend scaffold for FocusPet.
+这个后端是 FocusPet 的本地 AI 与数据服务。它包含 FastAPI、SQLite、本地任务接口、DeepSeek 兼容的 LLM 调用、Pet Agent、安全拦截、意图识别、skill 路由和测试。
 
-The goal of this stage is not to build the full AI system yet. We are setting up a clean local backend that can grow into the future architecture described in:
+iOS App 仍然是本地优先。后端是 AI 增强层，不是备忘录、待办、专注、历史这些基础功能的必需条件。
 
-- `AI_BACKEND_ARCHITECTURE.md`
-- `AGENTS_v2.md`
-- `RAG_AND_SKILLS_DESIGN.md`
+## 后端现在做什么
 
-## Why This Stack
+### 已实现
 
-This scaffold uses:
+- FastAPI 应用和版本化 API 路由
+- 健康检查接口
+- 本地 SQLite 数据库
+- 任务增删改查
+- 任务软删除和恢复
+- 专注记录创建和查询
+- 根据专注时长更新任务进度
+- 通过 OpenAI SDK 调用 DeepSeek 兼容接口
+- Pet Agent 对话接口
+- skill 路由前的输入安全拦截
+- 意图识别
+- skill 注册表
+- 简单编排层
+- `split_task`：任务拆分
+- `suggest_next_action`：下一步建议
+- `weekly_review`：周复盘
+- LLM 失败或 API Key 缺失时的本地兜底
+- 安全拦截、宠物人格提示词、skill 兜底、样例输出测试
 
-- `Python`
-- `FastAPI`
-- `Uvicorn`
-- `Pydantic`
-- `SQLite`
-- `SQLAlchemy`
+### 暂未实现
 
-Why:
-
-- FastAPI is easy to read for beginners.
-- It gives you a working API server with very little code.
-- It includes automatic API docs at `/docs`.
-- SQLite is perfect for local MVP work because it stores data in one local file.
-- SQLAlchemy lets you define database tables with Python classes.
-- This is simple enough for local learning, but still structured enough for future growth.
-
-## Current Scope
-
-Included now:
-
-- basic server setup
-- health check endpoint
-- local SQLite database
-- persisted task module
-- persisted focus session module
-- AI module placeholder
-- local environment example
-- task soft delete
-- task recycle-bin flow
-- fixed task status enum
-- auto-calculated task progress
-- task list filtering by status
-- focus session updates task time
-- DeepSeek-powered split-task endpoint
-- first formal backend Skill: split_task
-- second formal backend Skill: suggest_next_action
-- minimal SkillRegistry
-- lightweight Orchestrator layer
-
-Not included yet:
-
-- auth
+- 登录鉴权
+- 生产环境部署
 - Redis
+- 云同步
 - RAG
-- skills execution
-- production deployment
+- 长期用户记忆服务
+- 计费或限流系统
 
-## Folder Structure
+这些不是当前 MVP 的重点。当前重点是验证 Pet Agent 能否在安全边界内帮助用户重新进入任务。
+
+## 为什么保留后端
+
+后端存在有四个主要原因：
+
+1. DeepSeek API Key 不能放在 iOS App 里。
+2. 提示词、安全规则和模型调用需要集中管理。
+3. Pet Agent 在调用 LLM 前需要先做确定性安全判断和路由。
+4. 未来如果做记忆、统计、多端同步，会自然需要服务端能力。
+
+即使后端不可用，iOS App 仍然可以继续使用本地备忘录、待办、专注和历史功能。
+
+## 当前 AI 链路
 
 ```text
-Backend/
-  app/
-    api/
-      routes/
-        ai.py
-        focus_sessions.py
-        health.py
-        tasks.py
-      router.py
-    core/
-      config.py
-    db/
-      base.py
-      database.py
-      init_db.py
-    models/
-      focus_session.py
-      task.py
-    schemas/
-      ai.py
-      focus_sessions.py
-      tasks.py
-    services/
-      ai_service.py
-      focus_session_service.py
-      task_service.py
-    skills/
-      registry.py
-      suggest_next_action_skill.py
-      split_task_skill.py
-    orchestrator/
-      simple_orchestrator.py
-    main.py
-  .env.example
-  requirements.txt
-  README.md
+iOS 宠物聊天输入
+-> POST /api/v1/ai/pet-agent
+-> input_guard 安全拦截
+-> intent_detector 意图识别
+-> skill_router 判断是否调用 skill
+-> 可选执行 skill
+-> pet_response_generator 生成宠物口吻回复
+-> 返回结构化响应给 iOS
 ```
 
-## Local Setup
+LLM 可以负责：
 
-### 1. Go into the backend folder
+- 宠物语气
+- 简短解释
+- 任务步骤措辞
+- 复盘总结措辞
+
+代码必须负责：
+
+- 安全分类
+- skill 路由
+- 任务状态变化
+- 数据库写入
+- 兜底行为
+
+## 本地启动
+
+进入后端目录：
 
 ```bash
 cd Backend
-```
-
-### 2. Create a virtual environment
-
-```bash
 python3 -m venv .venv
-```
-
-### 3. Activate it
-
-macOS / zsh:
-
-```bash
 source .venv/bin/activate
-```
-
-### 4. Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 5. Create your local env file
-
-```bash
 cp .env.example .env
 ```
 
-Then open `.env` and set your real DeepSeek key:
+把 DeepSeek Key 填到 `Backend/.env`：
 
 ```env
-DEEPSEEK_API_KEY=your_real_deepseek_api_key
+DEEPSEEK_API_KEY=你的真实 deepseek key
 ```
 
-### 6. Start the server
+启动服务：
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-When the server starts for the first time, it will automatically create:
-
-- a `data/` folder
-- a `data/focuspet.db` SQLite database file
-- the `tasks` table
-- the `focus_sessions` table
-
-When the server starts later, it will also try to update the local `tasks` table if older columns are missing.
-This keeps the project beginner-friendly because you do not need a separate migration tool yet.
-
-### 7. Open the API docs
-
-Open:
+接口文档地址：
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-## Available Endpoints
-
-- `GET /health`
-- `GET /api/v1/tasks`
-- `GET /api/v1/tasks?status=todo`
-- `GET /api/v1/tasks/deleted`
-- `GET /api/v1/tasks/{id}`
-- `POST /api/v1/tasks`
-- `PATCH /api/v1/tasks/{id}`
-- `DELETE /api/v1/tasks/{id}`
-- `POST /api/v1/tasks/{id}/restore`
-- `GET /api/v1/focus-sessions`
-- `POST /api/v1/focus-sessions`
-- `POST /api/v1/ai/split-task`
-- `POST /api/v1/ai/suggest-next-action`
-
-## DeepSeek LLM Setup
-
-This backend now uses DeepSeek through the OpenAI-compatible SDK.
-The `split_task` and `suggest_next_action` capabilities are now wrapped as formal Skills in the backend.
-
-The API key is loaded from `.env` through `app/core/config.py`.
-
-Required env variable:
-
-```env
-DEEPSEEK_API_KEY=your_real_deepseek_api_key
-```
-
-If the key is missing, the AI endpoints return a `400` error with a clear message.
-
-## Skill Registry And Orchestrator
-
-The backend now also has:
-
-- a small SkillRegistry in `app/skills/registry.py`
-- a lightweight orchestrator in `app/orchestrator/simple_orchestrator.py`
-
-What the registry does:
-
-- keeps a simple mapping from skill name to skill object
-- makes it easier to add more skills later
-
-What the orchestrator does:
-
-- asks the registry for the right skill
-- runs that skill
-- gives the service layer one simple place to call AI behavior
-
-This is still intentionally small.
-It is not a full agent system yet, but it prepares the code for future evolution.
-
-## SplitTask Skill
-
-`split_task` is now implemented as a lightweight Skill in `app/skills/split_task_skill.py`.
-
-What this means:
-
-- the Skill has a clear name
-- the Skill has a short description
-- the Skill exposes one focused `run(user_input: str)` method
-
-Why this helps:
-
-- today, the route still behaves exactly the same
-- later, an orchestrator can choose between multiple skills
-- later, RAG can be added before or around a skill without rewriting the route contract
-
-For now, `app/services/ai_service.py` simply forwards the split-task request to this Skill.
-
-## SuggestNextAction Skill
-
-`suggest_next_action` is implemented as a lightweight Skill in `app/skills/suggest_next_action_skill.py`.
-
-What it does:
-
-- accepts a small list of current tasks
-- prefers a task that is already `in_progress`
-- otherwise picks one unfinished task that seems easy to start
-- asks the LLM for one short, gentle, concrete next action
-
-This Skill is different from `split_task`:
-
-- `split_task` turns one big goal into multiple steps
-- `suggest_next_action` gives only one best next move from the current task list
-
-If the request contains no unfinished tasks, this endpoint now returns a gentle fallback:
-
-```json
-{
-  "message": "先写下一件你最想推进的事吧。"
-}
-```
-
-## Task Status Rules
-
-Tasks now use a fixed status enum instead of any free-form string.
-
-Allowed values:
-
-- `todo`
-- `in_progress`
-- `paused`
-- `completed`
-
-If you send another value in `PATCH /api/v1/tasks/{id}`, FastAPI will reject the request with a validation error.
-
-The same status values can also be used for task list filtering.
-
-Example:
-
-- `/api/v1/tasks?status=todo`
-- `/api/v1/tasks?status=in_progress`
-
-## Task Progress Rules
-
-Task progress is now calculated by the backend.
-
-Simple formula:
-
-- `progress = spent_minutes / estimated_minutes`
-
-Safe rules:
-
-- if `estimated_minutes` is missing, progress becomes `0.0`
-- if `estimated_minutes` is `0` or invalid, progress becomes `0.0`
-- progress is always clamped into the `0.0` to `1.0` range
-
-Examples:
-
-- `spent_minutes = 15`, `estimated_minutes = 60` -> `progress = 0.25`
-- `spent_minutes = 90`, `estimated_minutes = 60` -> `progress = 1.0`
-- no `estimated_minutes` -> `progress = 0.0`
-
-## Task Auto-Complete Rule
-
-The backend can now auto-update task status when progress reaches the end.
-
-Simple rule:
-
-- if `progress >= 1.0`, set `status = completed`
-- but do not override `paused`
-
-Examples:
-
-- a `todo` task reaching `1.0` becomes `completed`
-- an `in_progress` task reaching `1.0` becomes `completed`
-- a `paused` task reaching `1.0` stays `paused`
-
-This rule is applied when task time changes.
-
-## Soft Delete
-
-Deleting a task is now a soft delete.
-
-This means:
-
-- the row stays in the database
-- `is_deleted` becomes `true`
-- `deleted_at` stores the delete time
-- normal task APIs do not return deleted tasks anymore
-- the recycle-bin API can list deleted tasks
-- the restore API can bring them back
-
-This is helpful because the backend keeps the record instead of removing it forever.
-
-## How Data Flows
-
-The request path now works like this:
-
-1. `API route`
-   A request enters a route file such as `app/api/routes/tasks.py`.
-
-2. `Service`
-   The route passes the request data to a service like `TaskService`.
-
-3. `Database model`
-   The service uses SQLAlchemy models such as `Task` or `FocusSession`.
-
-4. `SQLite database file`
-   SQLAlchemy saves and reads the data from `data/focuspet.db`.
-
-5. `Response schema`
-   The service converts the database row into a clean API response model.
-
-This keeps the code easier to understand because each layer has one job.
-
-## Test The Backend Locally
-
-### Health check
+运行测试：
 
 ```bash
-curl http://127.0.0.1:8000/health
+python -m pytest tests
 ```
 
-### Create a task
+## 环境文件
 
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Write backend notes",
-    "notes": "Keep this simple",
-    "estimated_minutes": 30
-  }'
+- `Backend/.env.example`：环境变量模板，可以提交。
+- `Backend/.env`：本地真实密钥文件，不能提交。
+- `Backend/data/`：本地 SQLite 数据，不能提交。
+- `Backend/.venv/`：本地 Python 虚拟环境，不能提交。
+
+## 常用接口
+
+- `GET /health`：健康检查。
+- `GET /api/v1/tasks`：获取任务列表。
+- `POST /api/v1/tasks`：创建任务。
+- `GET /api/v1/tasks/{id}`：获取任务详情。
+- `PATCH /api/v1/tasks/{id}`：更新任务。
+- `DELETE /api/v1/tasks/{id}`：软删除任务。
+- `GET /api/v1/tasks/deleted`：获取已删除任务。
+- `POST /api/v1/tasks/{id}/restore`：恢复任务。
+- `GET /api/v1/focus-sessions`：获取专注记录。
+- `POST /api/v1/focus-sessions`：创建专注记录。
+- `POST /api/v1/ai/split-task`：旧的拆任务接口，保留兼容。
+- `POST /api/v1/ai/pet-agent`：当前宠物 Agent 主接口。
+
+准确的请求和响应结构请看 `/docs`。
+
+## 文件说明
+
+```text
+Backend/
+  app/
+    main.py
+    api/
+    agents/
+    core/
+    db/
+    models/
+    orchestrator/
+    schemas/
+    services/
+    skills/
+  tests/
+  tools/
+  .env.example
+  requirements.txt
+  README.md
 ```
 
-### List tasks
+### `app/main.py`
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks
-```
+FastAPI 入口。负责创建应用、初始化数据库、挂载主路由。
 
-### List tasks filtered by status
+### `app/api/`
 
-Only the normal, non-deleted task list supports this filter.
+HTTP 路由层。
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks?status=todo
-```
+- `router.py`：主 API 路由。
+- `routes/health.py`：健康检查。
+- `routes/tasks.py`：任务接口。
+- `routes/focus_sessions.py`：专注记录接口。
+- `routes/ai.py`：AI 接口，包括旧拆任务接口和当前 Pet Agent 接口。
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks?status=in_progress
-```
+### `app/agents/`
 
-### Get one task by id
+Pet Agent 层。
 
-Replace `TASK_ID` with a real task id returned from the create task API.
+- `pet_agent.py`：Agent 主入口。
+- `input_guard.py`：skill 执行前的安全与范围判断。
+- `intent_detector.py`：把自然语言映射为产品意图。
+- `skill_router.py`：判断是否需要执行某个 skill。
+- `pet_personas.py`：兔兔、猫猫、狗狗、仓仓的语气设定。
+- `prompt_builder.py`：通用提示词构造。
+- `pet_response_generator.py`：宠物口吻回复生成和兜底。
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
+### `app/skills/`
 
-### List deleted tasks
+内部产品 skill。它们不是 Codex skill，而是后端 Pet Agent 可以调用的业务模块。
 
-This is the recycle-bin list.
+- `base.py`：skill 元信息和通用接口。
+- `registry.py`：稳定 skill 注册表。
+- `README.md`：skill 约定说明。
+- `split_task/`：任务拆分 skill，包含提示词、兜底和合约。
+- `suggest_next_action/`：下一步建议 skill，包含提示词、兜底和合约。
+- `weekly_review/`：周复盘 skill，包含提示词、兜底和合约。
+- `*_skill.py`：兼容旧调用的包装文件，等旧接口完全迁移后可再清理。
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/deleted
-```
+skill 可以返回建议，但不能直接写入用户数据。
 
-### Update a task with PATCH
+### `app/db/`、`app/models/`、`app/schemas/`、`app/services/`
 
-PATCH only updates the fields you send.
+标准后端数据层：
 
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "paused",
-    "spent_minutes": 25
-  }'
-```
+- `db/`：SQLite 连接和初始化。
+- `models/`：SQLAlchemy 数据表。
+- `schemas/`：Pydantic 请求和响应结构。
+- `services/`：任务、专注记录、AI 调用等服务。
 
-You do not need to send `progress`.
-The backend recalculates it from `spent_minutes` and `estimated_minutes`.
-If progress reaches `1.0` and the task is not paused, the backend also changes status to `completed`.
-
-### Delete a task
-
-This is now a soft delete, not a hard delete.
-
-```bash
-curl -X DELETE http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
-
-### Restore a deleted task
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/tasks/TASK_ID/restore
-```
-
-### Create a focus session
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/focus-sessions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "duration_seconds": 1500,
-    "timer_mode": "countUp"
-  }'
-```
-
-### Create a focus session linked to a task
-
-If you pass a `task_id`, the backend now checks whether that task exists and is not deleted.
-Then it adds focus time into that task's `spent_minutes`.
-After that, the backend recalculates `progress`.
-If progress reaches `1.0` and the task is not paused, status becomes `completed`.
-
-Simple rule:
-
-- added task minutes = `duration_seconds // 60`
-
-Example:
-
-- `1500` seconds adds `25` minutes
-- `1800` seconds adds `30` minutes
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/focus-sessions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "task_id": "TASK_ID",
-    "duration_seconds": 1500,
-    "timer_mode": "countUp"
-  }'
-```
-
-### List focus sessions
-
-```bash
-curl http://127.0.0.1:8000/api/v1/focus-sessions
-```
-
-### Split one task with DeepSeek
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/ai/split-task \
-  -H "Content-Type: application/json" \
-  -d '{
-    "user_input": "我想完成产品原型和需求梳理"
-  }'
-```
-
-Expected response shape:
-
-```json
-{
-  "tasks": [
-    "先整理产品目标和核心功能",
-    "列出主要页面和用户流程",
-    "补充每个页面的关键内容",
-    "完成原型初稿",
-    "检查并优化需求描述"
-  ]
-}
-```
-
-### Suggest one next action with DeepSeek
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/ai/suggest-next-action \
-  -H "Content-Type: application/json" \
-  -d '{
-    "tasks": [
-      {
-        "id": "1",
-        "title": "准备自我介绍",
-        "status": "todo",
-        "progress": 0.0
-      },
-      {
-        "id": "2",
-        "title": "整理项目案例",
-        "status": "in_progress",
-        "progress": 0.4
-      }
-    ]
-  }'
-```
-
-Expected response shape:
-
-```json
-{
-  "message": "先把正在推进的项目案例整理成 3 个要点。"
-}
-```
-
-## Test The AI Endpoint In /docs
-
-1. Start the server with `uvicorn app.main:app --reload`.
-2. Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
-3. Find `POST /api/v1/ai/split-task` or `POST /api/v1/ai/suggest-next-action`.
-4. Click `Try it out`.
-5. For `split-task`, use a request body like this:
-
-```json
-{
-  "user_input": "我想这周完成毕业论文开题报告"
-}
-```
-
-6. For `suggest-next-action`, use a request body like this:
-
-```json
-{
-  "tasks": [
-    {
-      "id": "1",
-      "title": "准备自我介绍",
-      "status": "todo",
-      "progress": 0.0
-    },
-    {
-      "id": "2",
-      "title": "整理项目案例",
-      "status": "in_progress",
-      "progress": 0.4
-    }
-  ]
-}
-```
-
-7. Click `Execute`.
-8. If everything is set correctly:
-
-- `split-task` returns a `tasks` array
-- `suggest-next-action` returns one `message` string
-
-Common cases:
-
-- If `DEEPSEEK_API_KEY` is missing, you should see a `400` response.
-- If the DeepSeek request fails, you should see a `500` response.
-
-## Beginner Test Flow
-
-Use this small flow to test the new logic.
-
-### 1. Create one task
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Study API changes",
-    "notes": "Beginner test",
-    "estimated_minutes": 60
-  }'
-```
-
-Save the returned id as `TASK_ID`.
-
-### 2. Check the default status
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
-
-You should see:
-
-- `status` is `todo`
-- `is_deleted` is `false`
-- `deleted_at` is `null`
-
-### 3. Update the status with a valid enum value
+### `app/orchestrator/`
 
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "in_progress"
-  }'
-```
+轻量编排层。当前编排刻意保持简单，因为这个产品更需要可预测行为，而不是复杂自治。
 
-### 4. Try an invalid status
+### `tests/`
 
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "active"
-  }'
-```
+后端测试，包括：
 
-You should get a validation error because `active` is no longer allowed.
+- Agent 安全拦截
+- skill 兜底行为
+- 宠物人格提示词约束
+- 样例输出检查
 
-### 5. Create a focus session linked to the task
+### `tools/`
 
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/focus-sessions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "task_id": "TASK_ID",
-    "duration_seconds": 1500,
-    "timer_mode": "countUp"
-  }'
-```
+本地检查工具，用来生成和审查 AI 输出样例。
 
-Then read the task again:
+## 安全策略
 
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
+这些输入不能进入任务 skill：
 
-You should see `spent_minutes` increased by `25`.
-You should also see `progress` updated automatically.
+- 自伤或自杀意图
+- 暴力伤害他人
+- 违法行为或规避限制
+- 成人内容
+- 高风险健康或医疗操作
+- “赚一百万”“当总统”这类过大目标
+- “让某人喜欢我”这类关系结果操纵
 
-For example:
+遇到这些输入时，后端应该返回宠物口吻的拒绝或转向。措辞可以由 LLM 生成，但“是否拦截”的决定必须由代码控制。
 
-- if `estimated_minutes` is `60`
-- and `spent_minutes` becomes `25`
-- then `progress` should be about `0.4167`
+## 设计原则
 
-If a later update or focus session brings `progress` to `1.0`, the task should become `completed` unless it is `paused`.
+后端在这些地方要保持稳定、朴素、可测试：
 
-### 6. Soft delete the task
+- 安全判断
+- 路由判断
+- 结构化解析
+- 数据写入
+- 兜底逻辑
 
-```bash
-curl -X DELETE http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
+LLM 适合用在这些地方：
 
-### 7. Confirm the task is hidden from the normal list
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks
-```
-
-The deleted task should no longer appear in the normal task list.
-
-If you call:
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/TASK_ID
-```
-
-you should get `404 Task not found.`
-
-### 8. Check the recycle bin
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/deleted
-```
-
-You should see the deleted task in this list.
-
-### 9. Restore the deleted task
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/v1/tasks/TASK_ID/restore
-```
-
-You should see:
-
-- `is_deleted` is `false`
-- `deleted_at` is `null`
-
-### 10. Confirm the task is back in the normal list
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks
-```
-
-Now the task should appear again.
-
-If you call:
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks/deleted
-```
-
-the restored task should no longer be in the deleted list.
-
-### 11. Test task filtering
-
-Update one task to `todo` and another task to `paused`, then try:
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks?status=todo
-```
-
-```bash
-curl http://127.0.0.1:8000/api/v1/tasks?status=paused
-```
-
-Each request should only return tasks with that status.
-Deleted tasks should still stay hidden from these filtered normal lists.
-
-### 12. Test auto-complete
-
-Create a task with `estimated_minutes = 60`, then set `spent_minutes = 60`:
-
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "spent_minutes": 60
-  }'
-```
-
-The response should show:
-
-- `progress` is `1.0`
-- `status` is `completed`
-
-### 13. Test paused task behavior
-
-Set a task to paused first:
-
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "paused"
-  }'
-```
-
-Then make its time reach full progress:
-
-```bash
-curl -X PATCH http://127.0.0.1:8000/api/v1/tasks/TASK_ID \
-  -H "Content-Type: application/json" \
-  -d '{
-    "spent_minutes": 60
-  }'
-```
-
-The response should show:
-
-- `progress` is `1.0`
-- `status` stays `paused`
-
-## Notes About The Database
-
-- SQLite stores data in `data/focuspet.db`
-- soft-deleted tasks stay in the database file
-- the API hides them by filtering `is_deleted = false`
-- the recycle-bin API shows them by filtering `is_deleted = true`
-- progress is recalculated from task time fields
-- tasks auto-complete when progress reaches `1.0`, unless they are paused
-- older task rows with invalid statuses are converted to `todo` on startup
-
-- We are using SQLite because it is the easiest local database for MVP development.
-- The database is just one file on disk: `Backend/data/focuspet.db`.
-- You do not need to install a separate database server.
-- If you delete that file, the local data is gone.
-- The app will recreate the file and tables on next startup.
-
-## What To Build Next
-
-Recommended next steps:
-
-1. Add simple due date fields and overdue task rules.
-2. Add separate history queries for completed tasks and active tasks.
-3. Add sorting options for due-soon or recently-updated tasks.
-4. Add event ingestion for `focus_ended`, `home_opened`, and similar events.
-5. Connect the iOS app to `POST /api/v1/ai/split-task`.
-6. Build a small rule-based planner for deadline suggestions.
-7. Add more AI endpoints only after this first LLM flow is stable.
-
-## Notes
-
-- This scaffold is intentionally simple.
-- The AI route is intentionally simple and only handles split-task for now.
-- For now, readability is more important than completeness.
+- 宠物语气
+- 简短解释
+- 小步骤措辞
+- 复盘总结

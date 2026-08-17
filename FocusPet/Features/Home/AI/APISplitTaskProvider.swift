@@ -2,16 +2,20 @@ import Foundation
 
 // Keeps the backend address in one place so localhost is easy to change later.
 enum FocusPetAPIConfig {
-    nonisolated(unsafe) static let baseURL = URL(string: "http://127.0.0.1:8000")!
+    nonisolated static var baseURL: URL {
+        URL(string: "http://127.0.0.1:8000")!
+    }
 }
 
 // Request model for POST /api/v1/ai/split-task.
 // The backend expects the user's raw sentence under `user_input`.
 private struct SplitTaskAPIRequest: Encodable {
     let userInput: String
+    let petType: String
 
     enum CodingKeys: String, CodingKey {
         case userInput = "user_input"
+        case petType = "pet_type"
     }
 }
 
@@ -53,11 +57,11 @@ struct APISplitTaskProvider: SplitTaskProviding {
         self.decoder = decoder
     }
 
-    nonisolated func generateSubtasks(from input: String) async throws -> [String] {
+    nonisolated func generateSubtasks(from input: String, petType: PetType) async throws -> [String] {
         let normalizedInput = input.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !normalizedInput.isEmpty else { return [] }
 
-        let requestBody = SplitTaskAPIRequest(userInput: normalizedInput)
+        let requestBody = SplitTaskAPIRequest(userInput: normalizedInput, petType: petType.rawValue)
         let endpoint = baseURL.appending(path: "api/v1/ai/split-task")
 
         var request = URLRequest(url: endpoint)

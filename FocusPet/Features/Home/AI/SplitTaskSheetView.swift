@@ -11,12 +11,21 @@ struct SplitTaskSheetView: View {
     // We only swap which provider gets injected, so the UI flow stays the same.
     init(
         preferredPet: PetType,
+        initialInput: String = "",
+        initialSuggestions: [String] = [],
         provider: any SplitTaskProviding = APISplitTaskProvider(),
         onImportSelected: @escaping ([String]) -> Void
     ) {
         self.preferredPet = preferredPet
         self.onImportSelected = onImportSelected
-        _viewModel = StateObject(wrappedValue: SplitTaskSheetViewModel(provider: provider))
+        _viewModel = StateObject(
+            wrappedValue: SplitTaskSheetViewModel(
+                initialInput: initialInput,
+                initialSuggestions: initialSuggestions,
+                preferredPet: preferredPet,
+                provider: provider
+            )
+        )
     }
 
     var body: some View {

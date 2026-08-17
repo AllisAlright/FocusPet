@@ -11,13 +11,6 @@ struct TasksPlaceholderView: View {
     var body: some View {
         FocusPetSceneScaffold(title: nil, subtitle: nil) {
             if !isSearching {
-                FocusPetCompanionHeader(
-                    petType: store.settings.defaultPet,
-                    eyebrow: "温和推进板",
-                    title: "今天也往前推进一点",
-                    message: "把事项整理起来，慢慢推进就好"
-                )
-
                 SoftPanel {
                     NavigationLink {
                         TaskRecentlyDeletedView()

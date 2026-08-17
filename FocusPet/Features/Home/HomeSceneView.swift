@@ -3,29 +3,17 @@ import SwiftUI
 private enum HomeSceneRoute: Hashable {
     case memo
     case tasks
-    case focus
+    case focus(taskID: UUID? = nil, suggestedMinutes: Int? = nil)
     case history
-}
-
-private enum HomeBubbleState {
-    case emotion
-    case loading
-    case suggestion
+    case chat
 }
 
 struct HomeSceneView: View {
     @EnvironmentObject private var store: FocusPetStore
     @State private var path: [HomeSceneRoute] = []
     @State private var showPetSheet = false
-    @State private var showSplitTaskSheet = false
-    @State private var splitTaskSuccessMessage: String?
     @State private var petMood: PetMood = .neutral
-    @State private var cachedSuggestion: String?
-    @State private var lastRefreshTimestamps: [Date] = []
-    @State private var isRefreshingSuggestion = false
-    @State private var bubbleState: HomeBubbleState = .emotion
-
-    private let suggestNextActionProvider: any SuggestNextActionProviding = APISuggestNextActionProvider()
+    @State private var companionMessageIndex = 0
 
     var body: some View {
         GeometryReader { proxy in
@@ -41,14 +29,6 @@ struct HomeSceneView: View {
                         .padding(.top, min(max(topInset, 0), 8))
                         .padding(.bottom, 4)
                         .frame(maxWidth: .infinity, alignment: .top)
-
-                    if let splitTaskSuccessMessage {
-                        SoftFeedbackToast(title: splitTaskSuccessMessage)
-                            .padding(.horizontal, FocusPetTheme.Spacing.large)
-                            .padding(.bottom, compact ? 112 : 122)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
                 }
                 .toolbar(.hidden, for: .navigationBar)
                 .navigationDestination(for: HomeSceneRoute.self) { route in
@@ -56,16 +36,9 @@ struct HomeSceneView: View {
                 }
                 .onAppear {
                     store.registerHomeOpened()
-                    bubbleState = .emotion
                 }
-                .onDisappear {
-                    bubbleState = .emotion
-                }
-                .onChange(of: store.agentEvents.first?.id) { _, _ in
-                    guard let latestEvent = store.agentEvents.first else { return }
-                    guard latestEvent.type == .taskCreated || latestEvent.type == .taskCompleted else { return }
-
-                    cachedSuggestion = nil
+                .onChange(of: store.settings.defaultPet) { _, _ in
+                    companionMessageIndex = 0
                 }
                 .sheet(isPresented: $showPetSheet) {
                     HomePetSelectionSheet(
@@ -79,14 +52,6 @@ struct HomeSceneView: View {
                     .presentationDragIndicator(.visible)
                     .presentationCornerRadius(28)
                 }
-                .sheet(isPresented: $showSplitTaskSheet) {
-                    SplitTaskSheetView(preferredPet: store.settings.defaultPet) { selectedTitles in
-                        importGeneratedTasks(selectedTitles)
-                    }
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
-                    .presentationCornerRadius(30)
-                }
             }
         }
     }
@@ -94,14 +59,14 @@ struct HomeSceneView: View {
     private func roomScene(compact: Bool) -> some View {
         GeometryReader { proxy in
             let topCardsTop = compact ? 28.0 : 32.0
-            let petCenterY = proxy.size.height * (compact ? 0.54 : 0.55)
-            let petSectionTop = petCenterY - (compact ? 74 : 86)
-            let petFrameHeight = compact ? 136.0 : 154.0
-            let assistantTop = petSectionTop + petFrameHeight + (compact ? 28.0 : 32.0)
+            let petCenterY = proxy.size.height * (compact ? 0.49 : 0.50)
+            let petSectionTop = petCenterY - (compact ? 76 : 88)
+            let petFrameHeight = compact ? 148.0 : 168.0
             let bottomCardsBottom = compact ? 12.0 : 16.0
+            let agentPanelBottom = bottomCardsBottom + (compact ? 150.0 : 164.0)
 
             ZStack {
-                VStack(spacing: compact ? 12 : 16) {
+                VStack(spacing: compact ? 28 : 32) {
                     HStack(spacing: FocusPetTheme.Spacing.medium) {
                         SceneObjectButton(
                             title: "备忘录",
@@ -120,7 +85,7 @@ struct HomeSceneView: View {
                     .padding(.horizontal, compact ? 14 : 16)
 
                     dialogueCard(compact: compact)
-                        .padding(.horizontal, compact ? 18 : 20)
+                        .padding(.horizontal, compact ? 12 : 14)
                 }
                 .padding(.top, topCardsTop)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -130,8 +95,9 @@ struct HomeSceneView: View {
                         .offset(y: 80)
 
                     PetCharacterView(petType: store.settings.defaultPet, mood: petMood)
-                        .scaleEffect(compact ? 0.74 : 0.82)
+                        .scaleEffect(compact ? 0.82 : 0.92)
                         .onTapGesture {
+                            rotateCompanionMessage(for: store.settings.defaultPet)
                             withAnimation(.spring(response: 0.34, dampingFraction: 0.72)) {
                                 petMood = reactionMood(for: store.settings.defaultPet)
                             }
@@ -154,16 +120,18 @@ struct HomeSceneView: View {
                             .padding(4)
                     }
                     .buttonStyle(.plain)
-                    .offset(x: compact ? 68 : 74, y: compact ? 72 : 80)
+                    .offset(x: compact ? 74 : 82, y: compact ? 76 : 86)
                     .zIndex(1)
                 }
                 .frame(height: petFrameHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .offset(y: petSectionTop)
 
-                assistantActionCard(compact: compact)
-                    .padding(.top, assistantTop)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                agentPanel(compact: compact)
+                    .padding(.horizontal, compact ? 12 : 14)
+                    .padding(.bottom, agentPanelBottom)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .zIndex(2)
 
                 HStack(spacing: FocusPetTheme.Spacing.medium) {
                     SceneObjectButton(
@@ -177,7 +145,7 @@ struct HomeSceneView: View {
                         title: "专注",
                         subtitle: "",
                         style: .lampClock,
-                        action: { path.append(.focus) }
+                        action: { path.append(.focus()) }
                     )
                 }
                 .padding(.horizontal, compact ? 14 : 16)
@@ -187,79 +155,23 @@ struct HomeSceneView: View {
         }
     }
 
-    private func assistantActionCard(compact: Bool) -> some View {
-        Button {
-            showSplitTaskSheet = true
-        } label: {
-            HStack(spacing: 12) {
-                ZStack {
-                    Circle()
-                        .fill(Color.white.opacity(0.52))
-                        .frame(width: compact ? 34 : 38, height: compact ? 34 : 38)
-
-                    Image(systemName: "sparkles")
-                        .font(.system(size: compact ? 13 : 14, weight: .semibold))
-                        .foregroundStyle(FocusPetTheme.Palette.ink)
-                }
-
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("帮我拆一个任务")
-                        .font(FocusPetTheme.Typography.headline)
-                        .foregroundStyle(FocusPetTheme.Palette.ink)
-
-                    Text("分成几步，会更容易开始~")
-                        .font(FocusPetTheme.Typography.subheadline)
-                        .foregroundStyle(FocusPetTheme.Palette.inkSoft)
-                        .lineLimit(1)
-                }
-
-                Spacer(minLength: 0)
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(FocusPetTheme.Palette.inkSoft.opacity(0.88))
-            }
-            .padding(.horizontal, compact ? 16 : 18)
-            .padding(.vertical, compact ? 8 : 10)
-            .background(
-                RoundedRectangle(cornerRadius: FocusPetTheme.Radius.medium, style: .continuous)
-                    .fill(Color.white.opacity(0.30))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: FocusPetTheme.Radius.medium, style: .continuous)
-                    .stroke(Color.white.opacity(0.34), lineWidth: 1)
-            )
-            .shadow(color: Color.black.opacity(0.03), radius: 10, y: 6)
+    private func agentPanel(compact: Bool) -> some View {
+        PetAgentLauncherBar(
+            petType: store.settings.defaultPet
+        ) {
+            path.append(.chat)
         }
-        .buttonStyle(.plain)
-        .frame(maxWidth: compact ? 288 : 320)
+        .frame(maxWidth: .infinity)
     }
 
     private func dialogueCard(compact: Bool) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             bubbleContent
-
-            Spacer(minLength: compact ? 6 : 8)
-
-            if let actionTitle = bubbleActionTitle {
-                HStack {
-                    Spacer(minLength: 0)
-
-                    Button(actionTitle) {
-                        handleBubbleAction()
-                    }
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(FocusPetTheme.Palette.inkSoft.opacity(0.78))
-                    .buttonStyle(.plain)
-                    .disabled(isRefreshingSuggestion)
-                    .opacity(isRefreshingSuggestion ? 0.56 : 1)
-                }
-            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(height: compact ? 80 : 84, alignment: .topLeading)
         .padding(.horizontal, 24)
-        .padding(.vertical, compact ? 18 : 20)
+        .padding(.vertical, compact ? 10 : 12)
+        .frame(maxWidth: .infinity, minHeight: compact ? 70 : 74, alignment: .leading)
         .background(Color.white.opacity(0.42), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         .overlay(alignment: .bottom) {
             HomeDialogueTail()
@@ -325,104 +237,36 @@ struct HomeSceneView: View {
             MemoPlaceholderView()
         case .tasks:
             TasksPlaceholderView()
-        case .focus:
-            FocusSetupView()
+        case let .focus(taskID, suggestedMinutes):
+            FocusSetupView(
+                preselectedTaskID: taskID,
+                initialCountdownMinutes: suggestedMinutes
+            )
         case .history:
             HistoryPlaceholderView()
+        case .chat:
+            PetChatView { taskID, suggestedMinutes in
+                path.append(.focus(taskID: taskID, suggestedMinutes: suggestedMinutes))
+            }
         }
     }
 
     private var companionMessage: String {
-        switch store.settings.defaultPet {
-        case .rabbit:
-            return "没关系，我们静下心就好。要不要选一个计划开始？"
-        case .cat:
-            return "放心，我会陪你一起慢慢推进。今天想先从哪件事开始？"
-        case .dog:
-            return "冲呀！我们今天也一起加油～先从哪个任务开始呢？"
-        case .hamster:
-            return "别着急，进度是日积月累的结果。今天想推进哪个计划呢？"
+        let messages = companionMessages(for: store.settings.defaultPet)
+        guard messages.indices.contains(companionMessageIndex) else {
+            return messages.first ?? "我在这里。"
         }
-    }
-
-    private var companionDetail: String {
-        switch store.settings.defaultPet {
-        case .rabbit:
-            return "外面的雨慢慢下，我们就在这里安静推进一点点。"
-        case .cat:
-            return "不用着急，我们先把注意力放到眼前这一项任务。"
-        case .dog:
-            return "我会一直陪着你完成一项又一项任务。"
-        case .hamster:
-            return "你专注投入的每分每秒，我都知道。"
-        }
+        return messages[companionMessageIndex]
     }
 
     @ViewBuilder
     private var bubbleContent: some View {
-        ZStack(alignment: .topLeading) {
-            switch bubbleState {
-            case .emotion:
-                Text(companionMessage)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(FocusPetTheme.Palette.ink)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .transition(.opacity.combined(with: .offset(y: 2)))
-                    .id("emotion")
-
-            case .loading:
-                HStack(spacing: 8) {
-                    ProgressView()
-                        .controlSize(.small)
-                        .tint(FocusPetTheme.Palette.inkSoft)
-
-                    Text("让我想一想...")
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundStyle(FocusPetTheme.Palette.ink)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .transition(.opacity)
-                .id("loading")
-
-            case .suggestion:
-                Text(cachedSuggestion ?? companionDetail)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(FocusPetTheme.Palette.ink)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .transition(.opacity.combined(with: .offset(y: 3)))
-                    .id(cachedSuggestion ?? "suggestion")
-            }
-        }
-        .animation(.easeInOut(duration: 0.2), value: bubbleState)
-        .animation(.easeInOut(duration: 0.2), value: cachedSuggestion)
-    }
-
-    private var bubbleActionTitle: String? {
-        switch bubbleState {
-        case .emotion:
-            return "给个建议"
-        case .loading:
-            return nil
-        case .suggestion:
-            return "换一个建议"
-        }
-    }
-
-    private func handleBubbleAction() {
-        switch bubbleState {
-        case .emotion:
-            requestSuggestionIfNeeded()
-        case .loading:
-            break
-        case .suggestion:
-            refreshSuggestionManually()
-        }
+        Text(companionMessage)
+            .font(.system(size: 17, weight: .semibold))
+            .foregroundStyle(FocusPetTheme.Palette.ink)
+            .lineLimit(3)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private func reactionMood(for petType: PetType) -> PetMood {
@@ -438,132 +282,174 @@ struct HomeSceneView: View {
         }
     }
 
-    private func importGeneratedTasks(_ titles: [String]) {
-        for title in titles {
-            _ = store.createTask(
-                title: title,
-                enableFocus: true,
-                preferredPet: store.settings.defaultPet
+    private func rotateCompanionMessage(for petType: PetType) {
+        let messages = companionMessages(for: petType)
+        guard messages.count > 1 else {
+            companionMessageIndex = 0
+            return
+        }
+
+        var nextIndex = Int.random(in: 0..<messages.count)
+        if nextIndex == companionMessageIndex {
+            nextIndex = (nextIndex + 1) % messages.count
+        }
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            companionMessageIndex = nextIndex
+        }
+    }
+
+    private func companionMessages(for petType: PetType) -> [String] {
+        switch petType {
+        case .rabbit:
+            return [
+                "我在这里。慢慢来就好。",
+                "先不用急，我们看一小步。",
+                "今天也可以只前进一点点。",
+                "呼吸一下，我陪你理顺。",
+                "没做完也没关系，可以续上。",
+                "先把眼前这一格放清楚。",
+                "你不用一个人扛着。",
+                "先坐稳，我们慢慢看。",
+                "小小开始，也算开始。",
+                "我会陪你把它放轻一点。",
+                "今天已经有一点进展啦。",
+                "心乱的时候，先记下一句。",
+                "不用马上变厉害，先开始。",
+                "我们先找最容易的一步。",
+                "慢慢推进，也很好。",
+                "累了就先停一会儿。",
+                "这件事可以一点点来。",
+                "我在旁边，别急。",
+                "先照顾好现在的自己。",
+                "继续一点，也算前进。"
+            ]
+        case .cat:
+            return [
+                "我在。说吧。",
+                "先别急，事情可以拆开。",
+                "先看最关键的一件。",
+                "这一步够小，可以开始。",
+                "不用全想完，先判断。",
+                "我会安静陪你看着。",
+                "先把混乱收一收。",
+                "这件事还有办法。",
+                "今天先做最轻的一步。",
+                "够了，先一点点。",
+                "先坐稳，再决定。",
+                "别急着评价自己。",
+                "继续比重开省力。",
+                "先挑一个能动的点。",
+                "这房间还算安静。",
+                "我没有催你，只是提醒。",
+                "先保存，再慢慢整理。",
+                "现在适合做小决定。",
+                "把范围缩小一点。",
+                "嗯，我看着呢。"
+            ]
+        case .dog:
+            return [
+                "我准备好陪你啦！",
+                "先来一小步就很好。",
+                "今天也可以慢慢动起来。",
+                "我们一起把它变轻一点。",
+                "好耶，先看看眼前这格！",
+                "只做五分钟也算开始。",
+                "你已经比刚才更近了。",
+                "我在这儿，别怕开始。",
+                "先挑最容易的那一步。",
+                "做一点点，也很棒。",
+                "今天有进展就值得记下。",
+                "累了也可以先缓一缓。",
+                "我陪你把节奏放慢。",
+                "先别想太远，我们动一下。",
+                "小小启动，也很厉害。",
+                "我们可以再试一小轮。",
+                "一件一件来就好。",
+                "先把任务放清楚吧。",
+                "我会陪你回来继续。",
+                "出发不用很用力！"
+            ]
+        case .hamster:
+            return [
+                "哼，我才不是在等你。",
+                "我只是在观察这个房间。",
+                "先别把事情想成一大团。",
+                "这团有点乱，先抓一根。",
+                "哼，小步也算进度。",
+                "我都帮你盯着呢。",
+                "先滚一小格也行。",
+                "不用逞强，电量要留着。",
+                "这事可以先缩小一点。",
+                "哼，开始一点也不是不行。",
+                "先把最轻的那步拿出来。",
+                "别一口气塞太多。",
+                "这格还没那么可怕。",
+                "我只是刚好有空。",
+                "先记下，别让它跑掉。",
+                "乱也没事，慢慢捋。",
+                "先挑一个能下手的。",
+                "哼，今天也能滚一格。",
+                "做完一点再说大话。",
+                "我在看着进度条呢。"
+            ]
+        }
+    }
+
+}
+
+private struct PetAgentLauncherBar: View {
+    let petType: PetType
+    let onOpen: () -> Void
+
+    var body: some View {
+        Button(action: onOpen) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(FocusPetTheme.Palette.cloud.opacity(0.62))
+                        .frame(width: 34, height: 34)
+
+                    Image(systemName: "message.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(FocusPetTheme.Palette.inkSoft)
+                }
+
+                Text("找\(petType.displayName)聊聊")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(FocusPetTheme.Palette.ink)
+                    .lineLimit(1)
+
+                Spacer(minLength: 0)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(FocusPetTheme.Palette.inkSoft.opacity(0.70))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.leading, 10)
+            .padding(.trailing, 14)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                FocusPetTheme.Palette.panel.opacity(0.62),
+                                FocusPetTheme.Palette.cloud.opacity(0.42)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
             )
+            .overlay(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(Color.white.opacity(0.62), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.06), radius: 16, y: 8)
         }
-
-        let message = titles.count == 1 ? "已加进待办里了。" : "已添加 \(titles.count) 个待办事项"
-        showSuccessToast(message)
-    }
-
-    private func requestSuggestionIfNeeded() {
-        bubbleState = .loading
-
-        guard cachedSuggestion == nil else {
-            withAnimation(.easeInOut(duration: 0.18)) {
-                bubbleState = .suggestion
-            }
-            return
-        }
-
-        fetchActionSuggestion(isManualRefresh: false)
-    }
-
-    private func refreshSuggestionManually() {
-        bubbleState = .loading
-        let now = Date()
-
-        // Only count refresh taps in a short recent window.
-        // If the user pauses for a while, older taps fall out naturally.
-        lastRefreshTimestamps = lastRefreshTimestamps.filter {
-            now.timeIntervalSince($0) < 20
-        }
-        lastRefreshTimestamps.append(now)
-
-        if lastRefreshTimestamps.count >= 5 {
-            cachedSuggestion = fallbackSuggestion(for: lastRefreshTimestamps.count)
-            withAnimation(.easeInOut(duration: 0.18)) {
-                bubbleState = .suggestion
-            }
-            return
-        }
-
-        fetchActionSuggestion(isManualRefresh: true)
-    }
-
-    private func fetchActionSuggestion(isManualRefresh: Bool) {
-        let tasks = store.tasks
-        isRefreshingSuggestion = true
-
-        _Concurrency.Task {
-            do {
-                let suggestion = try await suggestNextActionProvider.suggestNextAction(
-                    from: tasks,
-                    isManualRefresh: isManualRefresh
-                )
-                let softenedSuggestion = softenSuggestion(suggestion)
-
-                await MainActor.run {
-                    cachedSuggestion = softenedSuggestion.isEmpty ? nil : softenedSuggestion
-                    isRefreshingSuggestion = false
-                    withAnimation(.easeInOut(duration: 0.18)) {
-                        bubbleState = .suggestion
-                    }
-                }
-            } catch {
-                await MainActor.run {
-                    isRefreshingSuggestion = false
-                    bubbleState = .emotion
-                }
-                // Home stays calm on network failure and keeps the original emotional text.
-            }
-        }
-    }
-
-    private func softenSuggestion(_ text: String) -> String {
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return "" }
-
-        if trimmed.hasPrefix("先") {
-            return "可以" + trimmed
-        }
-
-        return trimmed
-    }
-
-    private func fallbackSuggestion(for attemptCount: Int) -> String {
-        let message: String
-
-        switch attemptCount {
-        case 7...:
-            message = "要不要写一个最新想做的，或者我们先放松一会儿"
-        case 6:
-            let options = [
-                "好像有点难选，要不要先随便推进一点点",
-                "如果现在不好选，可以先做一件最简单的事"
-            ]
-            message = options.randomElement() ?? options[0]
-        default:
-            let options = [
-                "要不要先随便选一件最轻松的开始一下",
-                "可以先挑一件最不费力的事情做一点点"
-            ]
-            message = options.randomElement() ?? options[0]
-        }
-
-        return softenSuggestion(message)
-    }
-
-    private func showSuccessToast(_ message: String) {
-        withAnimation(.spring(response: 0.34, dampingFraction: 0.84)) {
-            splitTaskSuccessMessage = message
-        }
-
-        _Concurrency.Task {
-            try? await _Concurrency.Task.sleep(nanoseconds: 1_500_000_000)
-            guard splitTaskSuccessMessage == message else { return }
-
-            await MainActor.run {
-                withAnimation(.easeInOut(duration: 0.22)) {
-                    splitTaskSuccessMessage = nil
-                }
-            }
-        }
+        .buttonStyle(.plain)
     }
 }
 

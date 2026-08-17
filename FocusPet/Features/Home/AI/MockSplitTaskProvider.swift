@@ -1,13 +1,14 @@
 import Foundation
 
 protocol SplitTaskProviding: Sendable {
-    func generateSubtasks(from input: String) async throws -> [String]
+    func generateSubtasks(from input: String, petType: PetType) async throws -> [String]
 }
 
 struct MockSplitTaskProvider: SplitTaskProviding {
     nonisolated init() {}
 
-    nonisolated func generateSubtasks(from input: String) async throws -> [String] {
+    nonisolated func generateSubtasks(from input: String, petType: PetType) async throws -> [String] {
+        _ = petType
         try await _Concurrency.Task.sleep(nanoseconds: 1_100_000_000)
 
         let normalizedInput = input.trimmingCharacters(in: .whitespacesAndNewlines)

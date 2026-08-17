@@ -1,5 +1,6 @@
 from app.skills.suggest_next_action_skill import suggest_next_action_skill
 from app.skills.split_task_skill import split_task_skill
+from app.skills.weekly_review_skill import weekly_review_skill
 
 
 class SkillRegistry:
@@ -13,6 +14,7 @@ class SkillRegistry:
         self._skills = {
             split_task_skill.name: split_task_skill,
             suggest_next_action_skill.name: suggest_next_action_skill,
+            weekly_review_skill.name: weekly_review_skill,
         }
 
     def get(self, skill_name: str):

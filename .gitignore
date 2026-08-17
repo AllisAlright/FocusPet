@@ -1,0 +1,11 @@
+Backend/.python-packages/
+Backend/.venv/
+Backend/data/
+Backend/.env
+.env
+__pycache__/
+*.pyc
+.DS_Store
+.DerivedData/
+xcuserdata/
+*.xcuserstate

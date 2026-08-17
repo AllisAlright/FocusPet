@@ -1,13 +1,19 @@
 import Foundation
 
 protocol SuggestNextActionProviding: Sendable {
-    func suggestNextAction(from tasks: [TaskItem], isManualRefresh: Bool) async throws -> String
+    func suggestNextAction(from tasks: [TaskItem], petType: PetType, isManualRefresh: Bool) async throws -> String
 }
 
 // Request model for POST /api/v1/ai/suggest-next-action.
 // The frontend selects one task locally, then sends only that target to the backend.
 private struct SuggestNextActionRequest: Encodable {
     let task: SuggestNextActionTaskPayload
+    let petType: String
+
+    enum CodingKeys: String, CodingKey {
+        case task
+        case petType = "pet_type"
+    }
 }
 
 private struct SuggestNextActionTaskPayload: Encodable {
@@ -60,11 +66,11 @@ actor APISuggestNextActionProvider: SuggestNextActionProviding {
         self.decoder = decoder
     }
 
-    func suggestNextAction(from tasks: [TaskItem], isManualRefresh: Bool) async throws -> String {
+    func suggestNextAction(from tasks: [TaskItem], petType: PetType, isManualRefresh: Bool) async throws -> String {
         _ = isManualRefresh
         let pools = buildPools(from: tasks)
         let selectedTask = selectCandidate(from: pools)
-        let requestBody = SuggestNextActionRequest(task: selectedTask)
+        let requestBody = SuggestNextActionRequest(task: selectedTask, petType: petType.rawValue)
         let endpoint = baseURL.appending(path: "api/v1/ai/suggest-next-action")
 
         var request = URLRequest(url: endpoint)

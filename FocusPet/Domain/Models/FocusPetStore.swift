@@ -20,17 +20,28 @@ final class FocusPetStore: ObservableObject {
     @Published var memoItems: [MemoItem]
     @Published var focusSessions: [FocusSession]
     @Published var settings: AppSettings
+    @Published private(set) var petChatMessages: [PetChatStoredMessage]
     @Published private(set) var agentEvents: [AgentEvent] = []
 
     private let taskManager = TaskManager()
     private let focusManager = FocusManager()
+    private let persistence: LocalPersistenceService
+    private var cancellables: Set<AnyCancellable> = []
 
     convenience init() {
+        self.init(persistence: .live)
+    }
+
+    convenience init(persistence: LocalPersistenceService) {
+        let persistedState = try? persistence.loadState()
+
         self.init(
-            tasks: FocusPetMockData.tasks,
-            memoItems: FocusPetMockData.memoItems,
-            focusSessions: FocusPetMockData.focusSessions,
-            settings: FocusPetMockData.appSettings
+            tasks: persistedState?.tasks ?? FocusPetMockData.tasks,
+            memoItems: persistedState?.memoItems ?? FocusPetMockData.memoItems,
+            focusSessions: persistedState?.focusSessions ?? FocusPetMockData.focusSessions,
+            settings: persistedState?.settings ?? FocusPetMockData.appSettings,
+            petChatMessages: persistedState?.petChatMessages ?? [],
+            persistence: persistence
         )
     }
 
@@ -38,16 +49,22 @@ final class FocusPetStore: ObservableObject {
         tasks: [TaskItem],
         memoItems: [MemoItem],
         focusSessions: [FocusSession],
-        settings: AppSettings
+        settings: AppSettings,
+        petChatMessages: [PetChatStoredMessage] = [],
+        persistence: LocalPersistenceService? = nil
     ) {
+        self.persistence = persistence ?? .disabled
         self.tasks = tasks
         self.memoItems = memoItems
         self.focusSessions = focusSessions
         self.settings = settings
+        self.petChatMessages = petChatMessages
         removeExpiredDeletedTasksIfNeeded()
         removeExpiredDeletedMemosIfNeeded()
         applyTaskSortIfNeeded()
         applyMemoSortIfNeeded()
+        observePersistenceChanges()
+        saveCurrentState()
     }
 
     func task(with id: UUID?) -> TaskItem? {
@@ -254,6 +271,40 @@ final class FocusPetStore: ObservableObject {
 
     func updateDefaultPet(_ pet: PetType) {
         settings.defaultPet = pet
+    }
+
+    func updateDefaultScene(_ scene: SceneType) {
+        settings.defaultScene = scene
+    }
+
+    func updateDefaultTimerMode(_ timerMode: TimerMode) {
+        settings.defaultTimerMode = timerMode
+    }
+
+    func updateDefaultCountdownMinutes(_ minutes: Int) {
+        settings.defaultCountdownMinutes = min(max(minutes, 5), 180)
+    }
+
+    func chatMessages(for petType: PetType) -> [PetChatStoredMessage] {
+        petChatMessages
+            .filter { $0.petType == petType }
+            .sorted { $0.createdAt < $1.createdAt }
+    }
+
+    @discardableResult
+    func appendPetChatMessage(
+        petType: PetType,
+        sender: PetChatMessageSender,
+        text: String
+    ) -> PetChatStoredMessage {
+        let message = PetChatStoredMessage(
+            petType: petType,
+            sender: sender,
+            text: text.trimmingCharacters(in: .whitespacesAndNewlines)
+        )
+        petChatMessages.append(message)
+        trimPetChatMessagesIfNeeded()
+        return message
     }
 
     func createTask(
@@ -620,6 +671,51 @@ final class FocusPetStore: ObservableObject {
                 return $0.isPinned && !$1.isPinned
             }
             return $0.updatedAt > $1.updatedAt
+        }
+    }
+
+    private func observePersistenceChanges() {
+        Publishers.CombineLatest4($tasks, $memoItems, $focusSessions, $settings)
+            .dropFirst()
+            .sink { [weak self] _, _, _, _ in
+                self?.saveCurrentState()
+            }
+            .store(in: &cancellables)
+
+        $petChatMessages
+            .dropFirst()
+            .sink { [weak self] _ in
+                self?.saveCurrentState()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func trimPetChatMessagesIfNeeded() {
+        let groupedMessages = Dictionary(grouping: petChatMessages, by: \.petType)
+        let trimmedMessages = groupedMessages.values.flatMap { messages in
+            messages
+                .sorted { $0.createdAt < $1.createdAt }
+                .suffix(80)
+        }
+        guard trimmedMessages.count != petChatMessages.count else { return }
+        petChatMessages = trimmedMessages.sorted { $0.createdAt < $1.createdAt }
+    }
+
+    private func saveCurrentState() {
+        let state = FocusPetPersistedState(
+            tasks: tasks,
+            memoItems: memoItems,
+            focusSessions: focusSessions,
+            settings: settings,
+            petChatMessages: petChatMessages
+        )
+
+        do {
+            try persistence.saveState(state)
+        } catch {
+            #if DEBUG
+            print("FocusPet persistence save failed: \(error.localizedDescription)")
+            #endif
         }
     }
 }

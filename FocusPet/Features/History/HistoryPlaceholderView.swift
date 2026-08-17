@@ -39,13 +39,6 @@ struct HistoryPlaceholderView: View {
     var body: some View {
         FocusPetSceneScaffold(title: nil, subtitle: nil) {
             if !isSearching {
-                FocusPetCompanionHeader(
-                    petType: store.settings.defaultPet,
-                    eyebrow: "安静档案角",
-                    title: "做过的事，都在这里",
-                    message: "记录做完的，也能捡起没完成的"
-                )
-
                 SoftPanel {
                     Picker("历史筛选", selection: $selectedFilter) {
                         ForEach(HistoryFilter.allCases) { filter in
